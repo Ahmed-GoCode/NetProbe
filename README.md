@@ -27,7 +27,14 @@ You are responsible for using it **legally and ethically** on systems you own or
 - ✅ Target hostname/IP resolution.  
 - ✅ Colored console output using `colorama`.  
 - ✅ Clean and modular code structure.  
+---
+🛡️ Disclaimer
 
+This tool is strictly for educational use:
+
+Do NOT use it to attack, disrupt, or scan systems without authorization.
+
+The author is not responsible for misuse of this software.
 ---
 
 ## 📦 Installation
@@ -39,3 +46,5 @@ cd NetProbe
 pip install -r requirements.txt
 python ddos.py
 
+ ```
+<p align="center">Made with ❤️ by Ahmad</p>
