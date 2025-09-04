@@ -1,5 +1,5 @@
 # ⚡ NetProbe v2.0  
-_A Lightweight Cybersecurity & Networking Utility_  
+_A Lightweight Cybersecurity & Networking Utility_ 
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python" />
