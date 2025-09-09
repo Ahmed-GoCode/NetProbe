@@ -218,6 +218,10 @@ def main():
     
     # Command line mode
     if args.scan:
+        if not args.scan.strip():
+            print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} Empty target provided.")
+            sys.exit(1)
+            
         valid, message = validate_target(args.scan)
         if not valid:
             print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} {message}")
@@ -246,46 +250,50 @@ def main():
         return
     
     # Interactive mode (default)
-    while True:
-        show_menu()
-        option = input(f"{Fore.GREEN}>> {Style.RESET_ALL}").strip()
+    try:
+        while True:
+            show_menu()
+            option = input(f"{Fore.GREEN}>> {Style.RESET_ALL}").strip()
 
-        if option == "1":
-            clear_screen()
-            target = get_target()
-            if target:
-                ip = resolve_hostname(target)
-                if ip:
-                    scan_range = get_integer_input("Port Scan Range (e.g., 1000 for ports 1-1000)", 1000, 1, 65535)
-                    threads = get_integer_input("Number of Scanner Threads", 50, 1, 200)
-                    run_port_scan(ip, scan_range, threads)
+            if option == "1":
+                clear_screen()
+                target = get_target()
+                if target:
+                    ip = resolve_hostname(target)
+                    if ip:
+                        scan_range = get_integer_input("Port Scan Range (e.g., 1000 for ports 1-1000)", 1000, 1, 65535)
+                        threads = get_integer_input("Number of Scanner Threads", 50, 1, 200)
+                        run_port_scan(ip, scan_range, threads)
+                        input(f"{Fore.MAGENTA}[PAUSE]{Style.RESET_ALL} Press Enter to return to the menu...")
+            
+            elif option == "2":
+                clear_screen()
+                target = get_target()
+                if target:
+                    resolve_hostname(target)
                     input(f"{Fore.MAGENTA}[PAUSE]{Style.RESET_ALL} Press Enter to return to the menu...")
-        
-        elif option == "2":
-            clear_screen()
-            target = get_target()
-            if target:
-                resolve_hostname(target)
-                input(f"{Fore.MAGENTA}[PAUSE]{Style.RESET_ALL} Press Enter to return to the menu...")
-        
-        elif option == "3":
-            clear_screen()
-            target = get_target()
-            if target:
-                ip = resolve_hostname(target)
-                if ip:
-                    ping_host(ip)
-                input(f"{Fore.MAGENTA}[PAUSE]{Style.RESET_ALL} Press Enter to return to the menu...")
-        
-        elif option == "4":
-            clear_screen()
-            print(f"{Fore.GREEN}[EXIT]{Style.RESET_ALL} Goodbye!")
-            time.sleep(1)
-            break
-        
-        else:
-            print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} Invalid option selected.")
-            time.sleep(1.5)
+            
+            elif option == "3":
+                clear_screen()
+                target = get_target()
+                if target:
+                    ip = resolve_hostname(target)
+                    if ip:
+                        ping_host(ip)
+                    input(f"{Fore.MAGENTA}[PAUSE]{Style.RESET_ALL} Press Enter to return to the menu...")
+            
+            elif option == "4":
+                clear_screen()
+                print(f"{Fore.GREEN}[EXIT]{Style.RESET_ALL} Goodbye!")
+                time.sleep(1)
+                break
+            
+            else:
+                print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} Invalid option selected.")
+                time.sleep(1.5)
+    except EOFError:
+        print(f"\n{Fore.YELLOW}[EXIT]{Style.RESET_ALL} Goodbye!")
+        sys.exit(0)
 
 if __name__ == "__main__":
     try:
